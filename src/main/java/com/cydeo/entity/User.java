@@ -1,11 +1,16 @@
 package com.cydeo.entity;
 
 import com.cydeo.enums.Gender;
+
+import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
 import java.time.LocalDateTime;
+
 
 @NoArgsConstructor
 @Data
@@ -26,6 +31,4 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
-
-
 }
