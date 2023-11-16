@@ -78,10 +78,10 @@ public class UserController {
 
     }
 
-//    @GetMapping("/delete/{username}")
-//    public String deleteUser(@PathVariable("username") String username) {
-//        userService.deleteById(username);
-//        return "redirect:/user/create";
-//    }
+    @GetMapping("/delete/{username}")
+    public String deleteUser(@PathVariable("username") String username) {
+        userService.delete(username);
+        return "redirect:/user/create";
+    }
 
 }
