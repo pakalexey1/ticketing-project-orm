@@ -1,6 +1,7 @@
 package com.cydeo.entity;
 
 
+import com.cydeo.enums.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,11 +34,10 @@ public class Project extends BaseEntity {
     @Column(columnDefinition = "DATE")
     private LocalDate endDate;
 
-    @Enumerated(EnumType.STRING)
     private String projectDetail;
 
     @Enumerated(EnumType.STRING)
-    private String projectStatus;
+    private Status projectStatus;
 
 
 }

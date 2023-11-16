@@ -8,7 +8,7 @@ import java.util.List;
 public interface ProjectService {
 
     ProjectDTO getByProjectCode(String code);
-    List<Project> listAllProjects();
+    List<ProjectDTO> listAllProjects();
     void save(ProjectDTO dto);
     void update(ProjectDTO dto);
     void delete(String code);
