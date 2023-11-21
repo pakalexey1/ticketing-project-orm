@@ -75,4 +75,9 @@ public class ProjectServiceImpl implements ProjectService {
         project.setProjectStatus(Status.COMPLETE);
         projectRepository.save(project);
     }
+
+    @Override
+    public List<ProjectDTO> listAllProjectDetails() {
+        return null;
+    }
 }
