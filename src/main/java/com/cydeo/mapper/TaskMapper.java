@@ -15,7 +15,7 @@ public class TaskMapper {
         this.modelMapper = modelMapper;
     }
 
-    public Task convertToEntity (TaskDTO dto, ModelMapper modelMapper){
+    public Task convertToEntity (TaskDTO dto){
 
         return modelMapper.map(dto, Task.class);
     }
