@@ -35,7 +35,7 @@ public class TaskServiceImpl implements TaskService {
 
         Optional<Task> foundTask = taskRepository.findById(id);
 
-        if ((foundTask.isPresent())){
+        if ((foundTask.isPresent())) {
             return taskMapper.convertToDTO(foundTask.get());
         }
         return null;
@@ -59,9 +59,9 @@ public class TaskServiceImpl implements TaskService {
 
         Optional<Task> foundTask = taskRepository.findById(dto.getId());
         Task convertedTask = taskMapper.convertToEntity(dto);
-        if(foundTask.isPresent()){
+        if (foundTask.isPresent()) {
             convertedTask.setId(foundTask.get().getId());
-            convertedTask.setTaskStatus(foundTask.get().getTaskStatus());
+            convertedTask.setTaskStatus(foundTask.get().getTaskStatus() == null ? foundTask.get().getTaskStatus() : dto.getTaskStatus());
             convertedTask.setAssignedDate(foundTask.get().getAssignedDate());
             taskRepository.save(convertedTask);
 
@@ -74,7 +74,7 @@ public class TaskServiceImpl implements TaskService {
 
         Optional<Task> foundTask = taskRepository.findById(id);
 
-        if (foundTask.isPresent()){
+        if (foundTask.isPresent()) {
             foundTask.get().setIsDeleted(true);
             taskRepository.save(foundTask.get());
         }
@@ -97,7 +97,16 @@ public class TaskServiceImpl implements TaskService {
         list.forEach(taskDTO -> delete(taskDTO.getId()));
     }
 
-    private List<TaskDTO> listAllByProject(ProjectDTO project){
+    @Override
+    public void completeByProject(ProjectDTO project) {
+        List<TaskDTO> list = listAllByProject(project);
+        list.forEach(taskDTO -> {
+            taskDTO.setTaskStatus(Status.COMPLETE);
+            update(taskDTO);
+        });
+    }
+
+    private List<TaskDTO> listAllByProject(ProjectDTO project) {
         List<Task> list = taskRepository.findAllByProject(projectMapper.convertToEntity(project));
         return list.stream().map(taskMapper::convertToDTO).collect(Collectors.toList());
     }
