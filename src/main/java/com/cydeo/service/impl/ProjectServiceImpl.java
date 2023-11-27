@@ -77,7 +77,10 @@ public class ProjectServiceImpl implements ProjectService {
 
         Project project = projectRepository.findByProjectCode(code);
         project.setIsDeleted(true);
+        project.setProjectCode(project.getProjectCode()+"-"+project.getId()); //adds a unique ID to the Existing project code so that the project code can be used again
         projectRepository.save(project);
+
+        taskService.deleteByProject(projectMapper.convertToDto(project));
 
     }
 
