@@ -96,20 +96,29 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectDTO> listAllProjectDetails() {
 
-        UserDTO currentUserDTO= userService.findByUserName("harold@manager.com");
+        UserDTO currentUserDTO = userService.findByUserName("harold@manager.com");
+        User user = userMapper.convertToEntity(currentUserDTO);
 
-        User currentUserEntity = userMapper.convertToEntity(currentUserDTO);
-
-        List<Project> list = projectRepository.findAllByAssignedManager(currentUserEntity);
+        List<Project> list = projectRepository.findAllByAssignedManager(user);
 
         return list.stream().map(project -> {
+
             ProjectDTO obj = projectMapper.convertToDto(project);
 
             obj.setUnfinishedTaskCounts(taskService.totalUnCompletedTasks(project.getProjectCode()));
             obj.setCompleteTaskCounts(taskService.totalCompletedTasks(project.getProjectCode()));
 
+
             return obj;
 
+
+
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProjectDTO> readAllByAssignedManager(User assignedManager) {
+        List<Project> list = projectRepository.findAllByAssignedManager(assignedManager);
+        return list.stream().map(projectMapper::convertToDto).collect(Collectors.toList());
     }
 }
